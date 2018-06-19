@@ -1,3 +1,8 @@
 name = Byu Views Hero
-description = A description of what your module does.
+description = Creates a view display format that implements the BYU hero component displays.
 core = 7.x
+package = BYU
+
+dependencies[] = views
+
+files[] = byu_views_hero_plugin_style_byu_hero.inc

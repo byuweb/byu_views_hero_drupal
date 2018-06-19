@@ -3,3 +3,63 @@
 * @file
 * A description of what your module does.
 */
+
+/**
+ * Implements hook_views_api().
+ * @return array
+ */
+
+function byu_views_hero_views_api() {
+  return [ 'api' => '3.0' ];
+}
+
+/**
+ * @param $array
+ * @return array
+ */
+
+function byu_views_hero_get_options($array) {
+  $options = array();
+  foreach ($array as $key => $value) {
+    if (!is_array($value)) {
+      $options[$key] = $value;
+    }
+    else {
+      $options = array_merge($options, byu_views_hero_get_options($value));
+    }
+  }
+  return $options;
+}
+
+/**
+ * Implements hook_preprocess_HOOK()
+ * @param $vars
+ */
+
+function template_preprocess_views_view_byu_hero(&$vars) {
+  drupal_add_js('//cdn.byu.edu/byu-hero-banner/1.x.x/byu-hero-banner.min.js', 'external');
+  drupal_add_css('//cdn.byu.edu/byu-hero-banner/1.x.x/byu-hero-banner.min.css', 'external');
+
+  $view = $vars['view'];
+  $options = byu_views_hero_get_options($view->style_plugin->options);
+  $banner_style = $options['banner_style'];
+  $style_2 = $options['style_2'];
+  $overlay_align = $options['overlay_align'];
+  $image_brightness = $options['image_brightness'];
+  $title = $options['title'];
+  $intro_text = $options['intro_text'];
+  $image = $options['image'];
+  $video_url = $options['video_url'];
+  $read_more_link = $options['read_more_link'];
+
+  $vars['banner_style'] = $banner_style;
+  $vars['style_2'] = $style_2;
+  $vars['overlay_align'] = $overlay_align;
+  $vars['image_brightness'] = $image_brightness;
+  $vars['title'] = $title;
+  $vars['intro_text'] = $intro_text;
+  $vars['image'] = $image;
+  $vars['video_url'] = $video_url;
+  $vars['read_more_link'] = $read_more_link;
+
+}
