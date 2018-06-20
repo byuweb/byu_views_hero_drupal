@@ -10,8 +10,13 @@ To use this module, you will need the views module. Then you will need to create
 
 ### Notes on Fields
 
-* Your video field should be a link field that only takes one value.
-* Your image field should only take one value.
+Your content type will need the following fields:
+
+* Title (Plain Text)
+* Intro Text (Plain Text, Long)
+* Image (Image Field) - Only one value
+* Video URL (Link Field) - Only one value
+* Read More Link (Link Field)
 
 ## Banner Styles
 
