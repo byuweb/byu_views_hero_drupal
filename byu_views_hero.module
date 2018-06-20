@@ -32,6 +32,49 @@ function byu_views_hero_get_options($array) {
 }
 
 /**
+ * Used for getting field names of the fields used for the BYU Hero view. The problem we were running into is that
+ * the field names would be in the options array as such:
+ * intro_text => [
+ *   body => body,
+ * ]
+ * which isn't very helpful. So this just takes the field name and returns it as a string.
+ *
+ *
+ * @param $array
+ * @return mixed
+ */
+
+function byu_views_hero_get_field_name($array) {
+  if (is_array($array)) {
+    foreach($array as $key => $value) {
+      $name = $value;
+    }
+    return $name;
+  }
+  else {
+    return $array;
+  }
+}
+
+/**
+ * Used to get the attribute out of an HTML element.
+ *
+ * @param $element - String that contains the HTML element
+ * @param $attribute - Attribute you want. e.g. src, href...
+ * @return bool|string
+ */
+
+function byu_views_hero_get_attribute($element, $attribute) {
+  $attribute .= '="';
+  $startPos = strpos($element, $attribute);
+  $startPos += strlen($attribute); // Offset position so we can get the url without the href="
+  $endPos = strpos($element, '"', $startPos);
+  $attrLength = $endPos - $startPos;
+
+  return substr($element, $startPos, $attrLength);
+}
+
+/**
  * Implements hook_preprocess_HOOK()
  * @param $vars
  */
@@ -41,25 +84,28 @@ function template_preprocess_views_view_byu_hero(&$vars) {
   drupal_add_css('//cdn.byu.edu/byu-hero-banner/1.x.x/byu-hero-banner.min.css', 'external');
 
   $view = $vars['view'];
-  $options = byu_views_hero_get_options($view->style_plugin->options);
-  $banner_style = $options['banner_style'];
-  $style_2 = $options['style_2'];
-  $overlay_align = $options['overlay_align'];
-  $image_brightness = $options['image_brightness'];
-  $title = $options['title'];
-  $intro_text = $options['intro_text'];
-  $image = $options['image'];
-  $video_url = $options['video_url'];
-  $read_more_link = $options['read_more_link'];
+  $options = $view->style_plugin->options;
+  $hero_classes = $options['hero_classes'];
+  $field_title = byu_views_hero_get_field_name($options['title']);
+  $field_intro_text = byu_views_hero_get_field_name($options['intro_text']);
+  $field_image = byu_views_hero_get_field_name($options['image']);
+  $field_video_url = byu_views_hero_get_field_name($options['video_url']);
+  $field_read_more_link = byu_views_hero_get_field_name($options['read_more_link']);
 
-  $vars['banner_style'] = $banner_style;
-  $vars['style_2'] = $style_2;
-  $vars['overlay_align'] = $overlay_align;
-  $vars['image_brightness'] = $image_brightness;
+  $fields = $view->field;
+  $title = $fields[$field_title]->original_value;
+  $intro_text = strip_tags($fields[$field_intro_text]->original_value);
+  $image = byu_views_hero_get_attribute($fields[$field_image]->original_value, 'src');
+  $video_url = byu_views_hero_get_attribute($fields[$field_video_url]->original_value, 'href');
+  $read_more_link = byu_views_hero_get_attribute($fields[$field_read_more_link]->original_value, 'href');
+  $read_more_title = strip_tags($fields[$field_read_more_link]->original_value);
+
+  $vars['hero_classes'] = $hero_classes;
   $vars['title'] = $title;
   $vars['intro_text'] = $intro_text;
   $vars['image'] = $image;
   $vars['video_url'] = $video_url;
   $vars['read_more_link'] = $read_more_link;
+  $vars['read_more_title'] = $read_more_title;
 
 }

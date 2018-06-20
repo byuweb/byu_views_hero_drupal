@@ -12,10 +12,7 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
 
   function option_definition() {
     $options = parent::option_definition();
-    $options['banner_style'] = ['default' => 'title-only'];
-    $options['style_2'] = ['default' => ''];
-    $options['overlay_align'] = ['default' => ''];
-    $options['image_brightness'] = ['default' => 'light-image'];
+    $options['hero_classes'] = ['default' => ''];
     $options['title'] = ['default' => ''];
     $options['intro_text'] = ['default' => ''];
     $options['image'] = ['default' => ''];
@@ -47,52 +44,17 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       }
     }
 
-    $form['banner_style'] = [
-      '#type' => 'select',
-      '#title' => t('Style'),
-      '#default_value' => $options['banner_style'],
+    // Classes Field
+
+    $form['hero_classes'] = [
+      '#type' => 'textfield',
+      '#title' => t('Classes'),
+      '#default_value' => $this->options['hero_classes'],
+      '#description' => 'Put the classes here that will define the banner\'s style. Separate classes with spaces. (See readme)',
       '#required' => TRUE,
-      '#options' => [
-        'title-only' => t('Title Only'),
-        'video-hero' => t('Video Hero'),
-        'side-image' => t('Side Image'),
-        'transparent-overlay' => t('Transparent Overlay'),
-        'full-screen' => t('Full Screen'),
-      ]
     ];
 
-    // Option for video support in side image
-
-    $form['style_2'] = [
-      '#type' => 'checkbox',
-      '#title' => 'Enable Video Support (Side Image Only)',
-    ];
-
-    // Alignment option for transparent overlay
-
-    $form['overlay_align'] = [
-      '#type' => 'select',
-      '#title' => t('Overlay Alignment (Transparent Overlay Only)'),
-      '#default_value' => $options['overlay_align'],
-      '#options' => [
-        null => t('Left Aligned'),
-        'byu-hero-right' => t('Right Aligned')
-      ],
-    ];
-
-    // Image brightness options for full screen
-
-    $form['image_brightness'] = [
-      '#type' => 'select',
-      '#title' => t('Image Brightness (Full Screen Only)'),
-      '#default_value' => $options['image_brightness'],
-      '#options' => [
-        'light-image' => t('Light Image'),
-        'dark-image' => t('Dark Image'),
-      ],
-    ];
-
-    // Title field
+    // Title Field
 
     $form['title'] = [
       '#type' => 'select',
@@ -100,7 +62,6 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#options' => $fields,
       '#default_value' => $this->options['title'],
       '#description' => 'Select the field for the banner\'s title.',
-      '#multiple' => TRUE,
       '#required' => TRUE,
     ];
 
@@ -124,7 +85,6 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#options' => $fields,
       '#default_value' => $this->options['image'],
       '#description' => 'Select the field for the banner\'s image source.',
-      '#multiple' => TRUE,
       '#required' => TRUE,
     ];
 
@@ -135,8 +95,7 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#title' => t('Video URL'),
       '#options' => $fields,
       '#default_value' => $this->options['video_url'],
-      '#description' => 'Select the field for the banner\'s video source.',
-      '#multiple' => TRUE,
+      '#description' => 'Select the field for the banner\'s video source. Should be a link field.',
       '#required' => TRUE,
     ];
 
@@ -148,7 +107,6 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#options' => $fields,
       '#default_value' => $this->options['read_more_link'],
       '#description' => 'Select the field for the banner\'s reade more link.',
-      '#multiple' => TRUE,
       '#required' => TRUE,
     ];
 

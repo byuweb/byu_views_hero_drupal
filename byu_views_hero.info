@@ -1,4 +1,4 @@
-name = Byu Views Hero
+name = BYU Views Hero
 description = Creates a view display format that implements the BYU hero component displays.
 core = 7.x
 package = BYU
