@@ -1,5 +1,5 @@
 <byu-hero-banner class="byu-component-rendered <?php print $hero_classes; ?>
-" image-source="<? print $image; ?>" video-source="<?php print $video_url; ?>">
+" image-source="<?php print $image; ?>" video-source="<?php print $video_url; ?>">
   <span slot="headline"><?php print $title; ?></span>
   <?php if (strpos($hero_classes, 'title-only') === FALSE) : ?>
   <span slot="intro-text"><?php print $intro_text; ?></span>
