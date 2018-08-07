@@ -74,7 +74,6 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#default_value' => $this->options['intro_text'],
       '#description' => 'Select the field for the banner\'s intro text.',
       '#multiple' => TRUE,
-      '#required' => TRUE,
     ];
 
     // Image field
@@ -96,7 +95,6 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#options' => $fields,
       '#default_value' => $this->options['video_url'],
       '#description' => 'Select the field for the banner\'s video source. Should be a link field.',
-      '#required' => TRUE,
     ];
 
     // Read More Link
@@ -107,7 +105,6 @@ class byu_views_hero_plugin_style_byu_hero extends views_plugin_style {
       '#options' => $fields,
       '#default_value' => $this->options['read_more_link'],
       '#description' => 'Select the field for the banner\'s reade more link.',
-      '#required' => TRUE,
     ];
 
     return $form;
